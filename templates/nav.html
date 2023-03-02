@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+    <a href="index.html" class="navbar-brand p-0">
+        <h1 class="m-0"><i class="fa fa-user-tie me-2"></i>SMEs BIS</h1>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="fa fa-bars"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto py-0">
+            <a href="{% url 'index' %}" class="nav-item nav-link">Home</a>
+            <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Loans</a>
+                <div class="dropdown-menu m-0">
+                    <a href="{% url 'small' %}" class="dropdown-item">Small</a>
+                    <a href="{% url 'medium' %}" class="dropdown-item">Medium</a>
+                    <a href="{% url 'enterprise' %}" class="dropdown-item">Enterprise</a>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Services</a>
+                <div class="dropdown-menu m-0">
+                    <a href="price.html" class="dropdown-item">Business Idea</a>
+                    <a href="feature.html" class="dropdown-item">Training</a>
+                    <a href="team.html" class="dropdown-item">Planing</a>
+                    <a href="testimonial.html" class="dropdown-item">Funding</a>
+                    <a href="quote.html" class="dropdown-item">Digital Skills</a>
+                    <a href="quote.html" class="dropdown-item">Monitotring Growth</a>
+                </div>
+            </div>
+            <a href="contact.html" class="nav-item nav-link">Contact</a>
+        </div>
+        <butaton type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal">
+    </div>
+</nav>
