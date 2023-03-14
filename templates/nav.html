@@ -7,25 +7,25 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto py-0">
-            <a href="{% url 'index' %}" class="nav-item nav-link">Home</a>
-            <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
+            <a href="{% url 'main:index' %}" class="nav-item nav-link">Home</a>
+            <a href="{% url 'main:about' %}" class="nav-item nav-link">About</a>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Loans</a>
                 <div class="dropdown-menu m-0">
-                    <a href="{% url 'small' %}" class="dropdown-item">Small</a>
-                    <a href="{% url 'medium' %}" class="dropdown-item">Medium</a>
-                    <a href="{% url 'enterprise' %}" class="dropdown-item">Enterprise</a>
+                    <a href="{% url 'main:small' %}" class="dropdown-item">Small</a>
+                    <a href="{% url 'main:medium' %}" class="dropdown-item">Medium</a>
+                    <a href="{% url 'main:enterprise' %}" class="dropdown-item">Enterprise</a>
                 </div>
             </div>
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Services</a>
+                <a href="{% url 'main:service' %}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Services</a>
                 <div class="dropdown-menu m-0">
-                    <a href="price.html" class="dropdown-item">Business Idea</a>
-                    <a href="feature.html" class="dropdown-item">Training</a>
-                    <a href="team.html" class="dropdown-item">Planing</a>
-                    <a href="testimonial.html" class="dropdown-item">Funding</a>
-                    <a href="quote.html" class="dropdown-item">Digital Skills</a>
-                    <a href="quote.html" class="dropdown-item">Monitotring Growth</a>
+                    <a href="{% url 'main:business_plan' %}" class="dropdown-item">Business Idea</a>
+                    <a href="#" class="dropdown-item">Training</a>
+                    <a href="#" class="dropdown-item">Planing</a>
+                    <a href="#" class="dropdown-item">Funding</a>
+                    <a href="#." class="dropdown-item">Digital Skills</a>
+                    <a href="#" class="dropdown-item">Monitotring Growth</a>
                 </div>
             </div>
             <a href="contact.html" class="nav-item nav-link">Contact</a>
