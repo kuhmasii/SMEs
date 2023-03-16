@@ -115,7 +115,7 @@
                     <h5 class="fw-bold text-primary text-uppercase">About Us</h5>
                     <h1 class="mb-0">SMEs Business Information System gives the Best Business Solution for SMEs Growth and Development</h1>
                 </div>
-                <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo justo et tempor eirmod magna dolore erat amet</p>
+                <p class="mb-4">The SMEs Business Information System is a highly effective solution for small and medium-sized enterprises (SMEs) looking to achieve growth and development. By providing SMEs with the necessary business tools and resources, this system helps streamline operations and improve efficiency, ultimately leading to increased profitability and success.</p>
                 <div class="row g-0 mb-3">
                     <div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
                         <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>Advanced Training</h5>
@@ -153,14 +153,14 @@
                             <i class="fa fa-cubes text-white"></i>
                         </div>
                         <h4>Best In Industry</h4>
-                        <p class="mb-0">Magna sea eos sit dolor, ipsum amet lorem diam dolor eos et diam dolor</p>
+                        <p class="mb-0"> It is a prestigious honor that signifies excellence and superior performance in a particular field, setting the standard for others to follow.</p>
                     </div>
                     <div class="col-12 wow zoomIn" data-wow-delay="0.6s">
                         <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
                             <i class="fa fa-award text-white"></i>
                         </div>
                         <h4>Advanced Training</h4>
-                        <p class="mb-0">Magna sea eos sit dolor, ipsum amet lorem diam dolor eos et diam dolor</p>
+                        <p class="mb-0">Our goal is to provide our clients with the advanced knowledge and skills they need to succeed in their careers and stay ahead of the competition.</p>
                     </div>
                 </div>
             </div>
@@ -176,14 +176,14 @@
                             <i class="fa fa-users-cog text-white"></i>
                         </div>
                         <h4>Professional Staff</h4>
-                        <p class="mb-0">Magna sea eos sit dolor, ipsum amet lorem diam dolor eos et diam dolor</p>
+                        <p class="mb-0">Our professional staff is comprised of individuals with diverse backgrounds and expertise in various areas, including finance, accounting, marketing, and management.</p>
                     </div>
                     <div class="col-12 wow zoomIn" data-wow-delay="0.8s">
                         <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
                             <i class="fa fa-phone-alt text-white"></i>
                         </div>
                         <h4>24/7 Support</h4>
-                        <p class="mb-0">Magna sea eos sit dolor, ipsum amet lorem diam dolor eos et diam dolor</p>
+                        <p class="mb-0"> At our company, we offer 24/7 support to our clients to ensure that they receive prompt assistance whenever they need it. Our support team is available around the clock to provide timely and efficient resolution to any issues or concerns our clients may have.</p>
                     </div>
                 </div>
             </div>
@@ -201,78 +201,20 @@
             <h1 class="mb-0">We Offer Other Solutions for Your Successful Business</h1>
         </div>
         <div class="row g-5">
+            {% for service in services %}
             <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
                 <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
                     <div class="service-icon">
                         <i class="fa fa-shield-alt text-white"></i>
                     </div>
-                    <h4 class="mb-3">Business Idea</h4>
-                    <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-                    <a class="btn btn-lg btn-primary rounded" href="{% url 'main:business_plan' %}">
+                    <h4 class="mb-3">{{ service.name }}</h4>
+                    <p class="m-0">{{ service.description|truncatewords:20 }}</p>
+                    <a class="btn btn-lg btn-primary rounded" href="{% url 'main:service' service.name %}">
                         <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
-                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-                    <div class="service-icon">
-                        <i class="fa fa-chart-pie text-white"></i>
-                    </div>
-                    <h4 class="mb-3">Learning and Training</h4>
-                    <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-                    <a class="btn btn-lg btn-primary rounded" href="">
-                        <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-                    <div class="service-icon">
-                        <i class="fa fa-code text-white"></i>
-                    </div>
-                    <h4 class="mb-3">Strategic Planing</h4>
-                    <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-                    <a class="btn btn-lg btn-primary rounded" href="">
-                        <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
-                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-                    <div class="service-icon">
-                        <i class="fab fa-android text-white"></i>
-                    </div>
-                    <h4 class="mb-3">Funding</h4>
-                    <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-                    <a class="btn btn-lg btn-primary rounded" href="">
-                        <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
-                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-                    <div class="service-icon">
-                        <i class="fa fa-search text-white"></i>
-                    </div>
-                    <h4 class="mb-3">Marketing And Digital Skills</h4>
-                    <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-                    <a class="btn btn-lg btn-primary rounded" href="">
-                        <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
-                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-                    <div class="service-icon">
-                        <i class="fa fa-search text-white"></i>
-                    </div>
-                    <h4 class="mb-3">Monitoring Growth</h4>
-                    <p class="m-0">Amet justo dolor lorem kasd amet magna sea stet eos vero lorem ipsum dolore sed</p>
-                    <a class="btn btn-lg btn-primary rounded" href="">
-                        <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
@@ -296,7 +238,7 @@
                         <h5 class="mb-4"><i class="fa fa-phone-alt text-primary me-3"></i>24 hrs telephone support</h5>
                     </div>
                 </div>
-                <p class="mb-4">Eirmod sed tempor lorem ut dolores. Aliquyam sit sadipscing kasd ipsum. Dolor ea et dolore et at sea ea at dolor, justo ipsum duo rebum sea invidunt voluptua. Eos vero eos vero ea et dolore eirmod et. Dolores diam duo invidunt lorem. Elitr ut dolores magna sit. Sea dolore sanctus sed et. Takimata takimata sanctus sed.</p>
+                <p class="mb-4">At our company, we offer 24-hour telephone support to our clients to ensure that they can always reach us when they need assistance. Our support team is available 24/7 to provide prompt and effective resolution to any issues or concerns our clients may have. We understand the importance of customer satisfaction and strive to provide exceptional service by offering 24-hour telephone support.</p>
                 <div class="d-flex align-items-center mt-2 wow zoomIn" data-wow-delay="0.6s">
                     <div class="bg-primary d-flex align-items-center justify-content-center rounded" style="width: 60px; height: 60px;">
                         <i class="fa fa-phone-alt text-white"></i>
@@ -350,7 +292,7 @@
                     </div>
                 </div>
                 <div class="pt-4 pb-5 px-5">
-                    Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore diam
+                    "The quality and craftsmanship are exceptional, and it has added a beautiful touch to my living space. I'm so glad that I made the investment!"
                 </div>
             </div>
             <div class="testimonial-item bg-light my-4">
@@ -358,11 +300,11 @@
                     <img class="img-fluid rounded" src="{% static 'img/testimonial-2.jpg' %}" style="width: 60px; height: 60px;" >
                     <div class="ps-4">
                         <h4 class="text-primary mb-1">John Doe</h4>
-                        <small class="text-uppercase">Profession</small>
+                        <small class="text-uppercase">CEO</small>
                     </div>
                 </div>
                 <div class="pt-4 pb-5 px-5">
-                    Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore diam
+                    "I had been struggling to grow my business for years, but after working with this company, I saw a significant increase in revenue and customer engagement. Their expertise and guidance were invaluable to me, and I would highly recommend their services to any business owner looking to scale."
                 </div>
             </div>
             <div class="testimonial-item bg-light my-4">
@@ -370,11 +312,11 @@
                     <img class="img-fluid rounded" src="{% static 'img/testimonial-3.jpg' %}" style="width: 60px; height: 60px;" >
                     <div class="ps-4">
                         <h4 class="text-primary mb-1">Janet Doe</h4>
-                        <small class="text-uppercase">Profession</small>
+                        <small class="text-uppercase">Accountant</small>
                     </div>
                 </div>
                 <div class="pt-4 pb-5 px-5">
-                    Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore diam
+                    "I was hesitant to try this service, but after experiencing their exceptional customer support and seeing the results, I'm now a loyal customer. Their team goes above and beyond to ensure that my needs are met, and I couldn't be happier."
                 </div>
             </div>
             <div class="testimonial-item bg-light my-4">
@@ -386,7 +328,7 @@
                     </div>
                 </div>
                 <div class="pt-4 pb-5 px-5">
-                    Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore diam
+                    "Their expertise and guidance were invaluable to me, and I would highly recommend their services to any business owner looking to scale."
                 </div>
             </div>
         </div>

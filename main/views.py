@@ -1,28 +1,53 @@
 from django.shortcuts import render
-
-# Create your views here.
+from . models import Loan, Service, Blog
 
 def index(request):
-	return render(request,'main/index.html')
+	services = Service.objects.all()
+
+	context = {'services':services}
+	return render(request, 'main/index.html', context)
 
 def about(request):
 	return render(request, 'main/about.html')
 
+
 def enterprise(request):
-	return render(request,'main/enterprise.html')
+	loans = Loan.objects.filter(loan_type__iexact='enterprise')
+	if loans.exists():
+		context = {'loans':loans, 'loan_type':'Enterprise'}
+		return render(request,'main/loan.html', context)
+	# return a 404 page
 
 def medium(request):
-	return render(request, 'main/medium.html')
+	loans = Loan.objects.filter(loan_type__iexact='medium')
+	if loans.exists():
+		context = {'loans':loans, 'loan_type':'Medium'}
+		return render(request, 'main/loan.html', context)
+	# return a 404 page
+
 
 def small(request):
-	return render(request, 'main/small.html')
+	loans = Loan.objects.filter(loan_type__iexact='small')
 
-def business_plan(request):
-	return render(request, 'main/business.html')
+	if loans.exists():
+		context = {'loans':loans, 'loan_type':'Small'}
+		return render(request, 'main/loan.html', context)
+	# return a 404 page
 
 
-def service(request):
-	return render(request, 'main/services.html')
+def service(request, service=None):
+
+	if service:
+		service = Service.objects.get(name__iexact=service)
+		filters = Blog.objects.filter(service=service)
+		context = {'service':service, 'filters':filters}
+		
+		return render(request, 'main/blog.html', context)
+	else: 
+		service = Service.objects.all()
+
+	context = {'service':service}
+	return render(request, 'main/services.html', context)
 
 
 def detail_small(request):
