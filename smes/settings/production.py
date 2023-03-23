@@ -1,8 +1,12 @@
 from .base import *
 
+
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR.parent / 'static'
 STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
-STATIC_ROOT = BASE_DIR.parent / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR.parent  / 'staticfiles',
+]
 
 DATABASES = {
     'default': {
