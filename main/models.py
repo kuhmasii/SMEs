@@ -47,7 +47,7 @@ class Service(models.Model):
 class Blog(models.Model):
 	service = models.ForeignKey(Service, on_delete=models.SET_NULL, related_name='blog_service', blank=True, null=True)
 	loan = models.ForeignKey(Loan, on_delete=models.SET_NULL, related_name='blog_loan', blank=True, null=True)
-	name = models.CharField(max_length=50, null=True, blank=True)
+	name = models.CharField(max_length=100, null=True, blank=True)
 	text = models.TextField(null=True, blank=True)
 	image = models.ImageField(upload_to='images/', blank=True, null=True)
 	updated = models.DateTimeField(auto_now=True)
