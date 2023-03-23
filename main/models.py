@@ -21,6 +21,16 @@ class Loan(models.Model):
 	def __str__(self):
 		return self.name
 
+	@property
+	def url(self):
+		try:
+			print(self.image)
+			url = self.image.url
+		except:
+			url = ''
+		return url
+	
+
 class Service(models.Model):
 	name = models.CharField(max_length=100, blank=False, null=False)
 	description = models.TextField(blank=True, null=True)
@@ -42,9 +52,18 @@ class Blog(models.Model):
 	image = models.ImageField(upload_to='images/', blank=True, null=True)
 	updated = models.DateTimeField(auto_now=True)
 	created = models.DateTimeField(auto_now_add=True)
+	url = models.URLField(max_length=1000, null=True, blank=True)
 
 	class Meta:
 		ordering = ('-created',)
 
 	def __str__(self):
 		return self.name
+
+	@property
+	def url(self):
+		try:
+			url = self.image.url
+		except:
+			url = ''
+		return url

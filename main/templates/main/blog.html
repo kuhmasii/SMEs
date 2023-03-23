@@ -28,28 +28,33 @@
 	<div class="container py-5">
 		<div class="row g-5">
 		<!-- Blog list Start -->
+				<h3 class="text-primary">
+					<i class="bi bi-brightness-low-fill"></i>
+					Why {{ service.name }}?
+				</h3>
 			<div class="col-lg-4">
-				<p class="h3 fw-semi-bold d-flex align-items-right bg-light px-3 mb-0">
-				{{ service.description }}
+
+				<p class="h4 fw-semi-bold d-flex align-items-right bg-light px-3 mb-0">
+				{{ service.description|linebreaksbr }}
 				</p>
 			</div>
 			<div class="col-lg-8">
 				<div class="mb-5 wow slideInUp" data-wow-delay="0.1s">
 					<div class="section-title section-title-sm position-relative pb-3 mb-4">
-						<h3 class="mb-0">Posts on <strong>{{ service.name|upper }}</strong></h3>
+						<h3 class="mb-0">Posts On <strong>{{ service.name|upper }}</strong></h3>
 					</div>
 					{% for post in filters %}
 					<div class="d-flex rounded overflow-hidden mb-3">
 
-						<img class="img-fluid" src="{% static 'img/blog-1.jpg' %}" style="width: 100px; height: 100px; object-fit: cover;" alt="">
+						<img class="img-fluid" src="{{ post.url }}" style="width: 100px; height: 100px; object-fit: cover;" alt="">
 
-						<a href="" class="h5 fw-semi-bold d-flex align-items-center bg-light px-3 mb-0">
+						<a href="{% url 'main:full_blog_details' post.id %}" class="h5 fw-semi-bold d-flex align-items-center bg-light px-3 mb-0">
 							{{ post.text|truncatechars:100 }}
 						</a>
 					</div>
 					{% empty %}
 					<div class="d-flex rounded overflow-hidden mb-3">
-					<a href="" class="h5 fw-semi-bold d-flex align-items-center bg-light px-3 mb-0">No Posts Yet</a>
+					<p class="h5 fw-semi-bold d-flex align-items-center bg-light px-3 mb-0">No Posts Yet</p>
 					</div>
 					{% endfor %}
 				</div>
