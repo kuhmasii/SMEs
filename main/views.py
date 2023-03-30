@@ -3,8 +3,8 @@ from django.http import Http404
 from . models import Loan, Service, Blog
 from . forms import LoanPredForm
 from django.http import HttpResponse
-from.utils import ohevalue, approvereject
-import pandas as pd
+# from.utils import ohevalue, approvereject
+# import pandas as pd
 
 
 def index(request):
