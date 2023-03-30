@@ -64,11 +64,11 @@ def loan_predict(request):
 			Property_Area = form.cleaned_data.get('Property_Area')
 
 			if LoanAmount < ApplicantIncome:
-				return HttpResponse(f"Application Status: Accepted")
+				return HttpResponse("Congrats! You are Eligible for this loan.\nLoan will be approved")
 			# elif int(df['LoanAmount'])<10000000:
 			# 	return HttpResponse('Invalid: Your Loan Request Exceeds 10 Niara million Limit')
 			else:
-				return HttpResponse(f'Application Status: Rejected')
+				return HttpResponse('Opps! You are not Eligible for this loan.\nLoan will not be approved')
 
 			# myDict = request.POST.dict()
 			# myDict.pop('csrfmiddlewaretoken')
