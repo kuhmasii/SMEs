@@ -1,6 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from . models import Loan, Service, Blog
+from . forms import LoanPredForm
+from django.http import HttpResponse
+from.utils import ohevalue, approvereject
+import pandas as pd
+
 
 def index(request):
 	services = Service.objects.all()
@@ -34,17 +39,51 @@ def small(request):
 	return render(request, 'main/loan.html', context)
 
 def loan_detail(request, loan_id=None):
-	
-	if loan_id is not None:
-		loan = get_object_or_404(Loan, id=loan_id)
-		blogs = Blog.objects.select_related('loan').filter(loan=loan)
-		
-		context = {'loan':loan, 'blogs':blogs}
-		return render(request, 'main/detail.html', context)
-	# return http404
+	form = LoanPredForm()
+	loan = get_object_or_404(Loan, id=loan_id)
+	blogs = Blog.objects.select_related('loan').filter(loan=loan)
+	context = {'loan':loan, 'blogs':blogs, 'form':form }
+	return render(request, 'main/detail.html', context)
+
+def loan_predict(request):
+	if request.method == "POST":
+		form = LoanPredForm(request.POST)
+		if form.is_valid():
+			Firstname = form.cleaned_data.get('firstname')
+			Lastname = form.cleaned_data.get('lastname')
+			Dependents = form.cleaned_data.get('Dependents')
+			ApplicantIncome = form.cleaned_data.get('ApplicantIncome')
+			CoapplicantIncome = form.cleaned_data.get('CoapplicantIncome')
+			LoanAmount = form.cleaned_data.get('LoanAmount')
+			Loan_Amount_Term  = form.cleaned_data.get('Loan_Amount_Term')
+			Credit_History = form.cleaned_data.get('Credit_History')
+			Gender  = form.cleaned_data.get('Gender')
+			Married  = form.cleaned_data.get('Married')
+			Education = form.cleaned_data.get('Education')
+			Self_Employed  = form.cleaned_data.get('Self_Employed')
+			Property_Area = form.cleaned_data.get('Property_Area')
+
+			if LoanAmount < ApplicantIncome:
+				return HttpResponse(f"Application Status: Accepted")
+			# elif int(df['LoanAmount'])<10000000:
+			# 	return HttpResponse('Invalid: Your Loan Request Exceeds 10 Niara million Limit')
+			else:
+				return HttpResponse(f'Application Status: Rejected')
+
+			# myDict = request.POST.dict()
+			# myDict.pop('csrfmiddlewaretoken')
+			# df=pd.DataFrame(myDict, index=[0])
+			# answer=approvereject(ohevalue(df))[0]
+			# Xscalers=approvereject(ohevalue(df))[1]
+			# if answer == 'Rejected':
+			# 	return HttpResponse(f"Application Status: {answer}")
+			# elif int(df['LoanAmount'])<10000000:
+			# 	return HttpResponse('Invalid: Your Loan Request Exceeds 10 Niara million Limit')
+			# else:
+			# 	return HttpResponse(f'Application Status: {answer}')
+
 
 def full_blog_details(request, id=None):
-
 	if id is not None:
 		try:
 			blog = Blog.objects.select_related('loan', 'service').get(id=id)
