@@ -1,6 +1,6 @@
-
+# from keras import backend as K
 # import joblib
-
+# import numpy as np
 # import pandas as pd
 # from pathlib import Path
 
@@ -22,10 +22,10 @@
 # 	try:
 # 		mdl=joblib.load(Path("main") / "model/loan_model.pkl")
 # 		scaler=joblib.load(Path("main") / "model/ML_Model.pkl")
-# 		# print('checking after load')
 # 		X=scaler.transform(unit)
 # 		y_pred=mdl.predict(X)
 # 		y_pred=(y_pred>0.58)
+		
 # 		newdf=pd.DataFrame(y_pred, columns=['Status'])
 # 		newdf=newdf.replace({True:'Approved', False:'Rejected'})
 # 		K.clear_session()

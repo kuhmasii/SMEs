@@ -63,24 +63,25 @@ def loan_predict(request):
 			Self_Employed  = form.cleaned_data.get('Self_Employed')
 			Property_Area = form.cleaned_data.get('Property_Area')
 
-			if LoanAmount < ApplicantIncome:
-				return HttpResponse("Congrats! You are Eligible for this loan.\nLoan will be approved")
-			# elif int(df['LoanAmount'])<10000000:
-			# 	return HttpResponse('Invalid: Your Loan Request Exceeds 10 Niara million Limit')
-			else:
-				return HttpResponse('Opps! You are not Eligible for this loan.\nLoan will not be approved')
-
 			# myDict = request.POST.dict()
 			# myDict.pop('csrfmiddlewaretoken')
+			
 			# df=pd.DataFrame(myDict, index=[0])
 			# answer=approvereject(ohevalue(df))[0]
 			# Xscalers=approvereject(ohevalue(df))[1]
-			# if answer == 'Rejected':
-			# 	return HttpResponse(f"Application Status: {answer}")
+			if ApplicantIncome > LoanAmount:
+				return HttpResponse("Congrats! You are Eligible for this loan.\nLoan will be approved")
+			elif int(df['LoanAmount'])<10000000:
+				return HttpResponse('Invalid: Your Loan Request Exceeds 10 Niara million Limit')
+			else:
+				return HttpResponse('Opps! You are not Eligible for this loan.\nLoan will not be approved')
+
+			# if answer.lower() == 'approved':
+			# 	return HttpResponse("Congrats! You are Eligible for this loan.\nLoan will be approved")
 			# elif int(df['LoanAmount'])<10000000:
 			# 	return HttpResponse('Invalid: Your Loan Request Exceeds 10 Niara million Limit')
 			# else:
-			# 	return HttpResponse(f'Application Status: {answer}')
+			# 	return HttpResponse('Opps! You are not Eligible for this loan.\nLoan will not be approved')
 
 
 def full_blog_details(request, id=None):
