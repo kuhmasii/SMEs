@@ -3,9 +3,9 @@ from django.http import Http404
 from . models import Loan, Service, Blog
 from . forms import LoanPredForm
 from django.http import HttpResponse
-# from.utils import ohevalue, approvereject
-# import pandas as pd
-
+from django.contrib import messages
+import csv
+import io
 
 def index(request):
 	services = Service.objects.all()
@@ -111,3 +111,29 @@ def service(request, service=None):
 	context = {'service':service}
 	return render(request, 'main/services.html', context)
 	
+
+def chart(request):
+	
+	if request.method == 'POST':
+		data = request.POST.get('data') 
+		labels = request.POST.get('labels')
+		file = request.FILES.get('file')
+		graph_type = request.POST.get('graph_type')
+
+		if not file or not file.name.endswith('.csv'):
+			messages.error(request, 'Upload a CSV File.')
+		else:
+			file_data = io.StringIO(file.read().decode('utf-8'))
+			reader = csv.DictReader(file_data)
+
+			if not labels or not data in next(reader).keys():
+				messages.error(request, "Column name must match the one on the File")
+			else:
+				data_,labels_ = [],[]
+				for x in reader:
+					data_.append(float(x[data]))
+					labels_.append(x[labels])
+				labels_ = list(set(labels_))
+				context = {'data':data_,'labels':labels_,'check':True, 'graph_type':graph_type}
+				return render(request, 'main/monitoring.html', context)
+	return render(request, 'main/monitoring.html', {'check': False})

@@ -13,7 +13,8 @@ urlpatterns = [
     path('loan-detail/<int:loan_id>/', views.loan_detail, name='loan_detail'),
     path('blogs/<int:id>/', views.full_blog_details, name='full_blog_details'),
     path('services/', views.service, name='service'),
-    path('services/<str:service>/', views.service, name='service')
+    path('services/<str:service>/', views.service, name='service'),
+    path('chart/', views.chart, name='chart')
 ]
 
 

@@ -15,7 +15,7 @@ DATABASES = {
     }
 }
 
-CSRF_TRUSTED_ORIGINS = ['https://smes.up.railway.app', 'https://smesbis.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://smesbis.up.railway.app']
 # ==============================================================================
 # MEDIA FILES SETTINGS
 # ==============================================================================
