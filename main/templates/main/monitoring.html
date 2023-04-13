@@ -54,25 +54,13 @@
                 <div class="col-lg-5">
                     {% include 'messages.html' %}
                     <div class="bg-primary rounded h-100 d-flex align-items-center p-5 wow zoomIn" data-wow-delay="0.9s">
-                        <form method="POST" enctype="multipart/form-data">
+                        <form method='POST' enctype="multipart/form-data">
                             <div class="row g-3">
-                                <div class="col-xl-12">
-                                    <input type="text" class="form-control bg-light border-0" placeholder="Labels(Age, Year, Date, etc)" style="height: 55px;" name='labels'>
-                                </div>
+                                {% for form_ in  form %}
                                 <div class="col-12">
-                                    <input type="text" class="form-control bg-light border-0" placeholder="Data(column to check on)" style="height: 55px;" name="data">
+                                    {{ form_ }}
                                 </div>
-                                <div class="col-12">
-                                   <input type="file" class="form-control bg-light border-0" style="height: 55px;" name="file">
-                                </div>
-                                <div class="col-12">
-                                  <select class="form-select bg-light border-0" style="height: 55px;" name="graph_type">
-                                      <option selected value="bar">Bar</option>
-                                        <option value="line">Line</option>
-                                        <option value="scatter">Scatter</option>
-                                        <option value="bubble">Bubble</option>
-                                    </select>
-                                </div>
+                                {% endfor %}
                                 {% csrf_token %}
                                 <div class="col-12">
                                     <button class="btn btn-dark w-100 py-3" type="submit">Plot A

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from . models import Loan, Service, Blog
-from . forms import LoanPredForm
+from . forms import LoanPredForm, GraphForm
 from django.http import HttpResponse
 from django.contrib import messages
 import csv
@@ -113,16 +113,18 @@ def service(request, service=None):
 	
 
 def chart(request):
+
+	form = GraphForm()
 	
 	if request.method == 'POST':
-		data = request.POST.get('data') 
-		labels = request.POST.get('labels')
-		file = request.FILES.get('file')
-		graph_type = request.POST.get('graph_type')
+		form = GraphForm(request.POST, request.FILES)
+		if form.is_valid():
+			labels = form.cleaned_data.get('labels')
+			data = form.cleaned_data.get('data')
+			graph_type = form.cleaned_data.get('graph_type')
+			file = form.cleaned_data.get('file')
 
-		if not file or not file.name.endswith('.csv'):
-			messages.error(request, 'Upload a CSV File.')
-		else:
+
 			file_data = io.StringIO(file.read().decode('utf-8'))
 			reader = csv.DictReader(file_data)
 
@@ -131,9 +133,13 @@ def chart(request):
 			else:
 				data_,labels_ = [],[]
 				for x in reader:
-					data_.append(float(x[data]))
+					data_.append(x[data])
 					labels_.append(x[labels])
 				labels_ = list(set(labels_))
-				context = {'data':data_,'labels':labels_,'check':True, 'graph_type':graph_type}
+
+				form = GraphForm()
+
+				context = {'form':form, 'data':data_,'labels':labels_,'check':True, 'graph_type':graph_type}
 				return render(request, 'main/monitoring.html', context)
-	return render(request, 'main/monitoring.html', {'check': False})
+	return render(request, 'main/monitoring.html', {'form':form})
+	
