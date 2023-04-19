@@ -19,12 +19,12 @@ class LoanPredForm(forms.Form):
 
 class GraphForm(forms.Form):
     labels = forms.CharField(max_length=100, 
-        widget=forms.TextInput(attrs={'placeholder': 'Labels(Age, Year, Date, etc)'}))
+        widget=forms.TextInput(attrs={'placeholder': 'Labels; can be more than one columns ( Age, Year, Date, etc)'}))
     data = forms.CharField(max_length=100,
-         widget=forms.TextInput(attrs={'placeholder': 'column to check on'}))
-    file = forms.FileField()
-    graph_type = forms.ChoiceField(choices=[('bar', 'bar'), ('line', 'line')])
-       
+         widget=forms.TextInput(attrs={'placeholder': 'column to be checked on'}))
+    indicator = forms.CharField(max_length=100, required=False,
+         widget=forms.TextInput(attrs={'placeholder': 'indicator must be a column with unique data (Optional)'}))
+    file = forms.FileField()       
 
     def __init__(self, *args, **kwargs):
         super(GraphForm, self).__init__(*args, **kwargs)

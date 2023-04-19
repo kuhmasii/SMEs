@@ -5,53 +5,28 @@
     <!-- Quote Start -->
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-lg-7">
+            <div>
+                <div>
                     <div class="section-title position-relative pb-3 mb-5">
                         <h5 class="fw-bold text-primary text-uppercase">Plot A Graph</h5>
                         <h1 class="mb-0"></h1>
                     </div>
-                    <div class="row gx-3">
+                    <div>
                       {% if check %}
-                        <div>
-                          <canvas id="myChart"></canvas>
-                        </div>
-                          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                          <script>
-                                const ctx = document.getElementById('myChart');
+                        {% autoescape off %}
 
-                                new Chart(ctx, {
-                                  type: '{{ graph_type|safe }}',
-                                  data: {
-                                    labels: {{ labels|safe }},
-                                    datasets: [{
-                                      label: 'Plotting Graph data',
-                                      data: {{ data|safe }},
-                                      backgroundColor: [
-                                        'rgb(255, 99, 132)',
-                                        'rgb(54, 162, 235)',
-                                        'rgb(255, 205, 86)'
-                                      ],
-                                      borderWidth: 1
-                                    }]
-                                  },
-                                  options: {
-                                    scales: {
-                                      y: {
-                                        beginAtZero: true
-                                      }
-                                    }
-                                  }
-                                });
-                          </script>
+                        {{ chart }}
+                            
+                        {% endautoescape %}
+
                       {% else %}
-                            <div>
-                              <h1 class="fw-bold text-uppercase">Graph Plot Appears Here.</h1>
-                            </div>
+                        <div>
+                          <h1 class="fw-bold text-uppercase">Graph Plot Appears Here.</h1>
+                        </div>
                       {% endif %}
                     </div>
                 </div>
-                <div class="col-lg-5">
+                <div>
                     {% include 'messages.html' %}
                     <div class="bg-primary rounded h-100 d-flex align-items-center p-5 wow zoomIn" data-wow-delay="0.9s">
                         <form method='POST' enctype="multipart/form-data">

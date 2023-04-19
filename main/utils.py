@@ -1,7 +1,9 @@
 # from keras import backend as K
 # import joblib
 # import numpy as np
-# import pandas as pd
+import plotly.express as px
+import pandas as pd
+import numpy as np
 # from pathlib import Path
 
 
@@ -32,3 +34,43 @@
 # 		return (newdf.values[0][0],X[0])
 # 	except ValueError as e:
 # 		return (e.args[0])
+
+def clean_file(file, labels_, data_, indicate_=None):
+
+	try:
+		# cleaning data
+		data = pd.read_csv(f'{file.file.path}')
+		data.replace(0, np.nan, inplace=True)
+		data.replace(' ', np.nan, inplace=True)
+		data.dropna(inplace=True)
+
+		col = labels_.split(",")
+		if len(col) > 1:
+			labels_ = col 
+
+		if isinstance(labels_, str) and not labels_ in data.columns.values:
+			return None
+		
+		if not data_ in data.columns.values:
+			return None
+
+		if indicate_ and indicate_ not in data.columns.values:
+			return None 
+
+		if isinstance(labels_, list):
+			for l in labels_:
+				if l not in data.columns.values:
+					return None
+
+		if indicate_:
+			fig = px.histogram(data,  x=data_, y=labels_, title=f"Graph of {data_} against {labels_}",
+					labels={'x':data_, 'y':labels_}, height=1000, color=indicate_)
+		else:
+			fig = px.histogram(data,  x=data_, y=labels_, title=f"Graph of {data_} against {labels_}", 
+				labels={'x':data_, 'y':labels_}, height=1000)
+		
+
+		return fig.to_html(full_html=True, include_plotlyjs=False)
+	except:
+		return None
+

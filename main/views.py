@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
-from . models import Loan, Service, Blog
+from . models import Loan, Service, Blog, File
 from . forms import LoanPredForm, GraphForm
 from django.http import HttpResponse
+from .utils import clean_file
 from django.contrib import messages
-import csv
-import io
+
 
 def index(request):
 	services = Service.objects.all()
@@ -71,18 +71,10 @@ def loan_predict(request):
 			# Xscalers=approvereject(ohevalue(df))[1]
 			if ApplicantIncome > LoanAmount:
 				return HttpResponse("Congrats! You are Eligible for this loan.\nLoan will be approved")
-			elif int(df['LoanAmount'])<10000000:
+			elif int(LoanAmount)<10000000:
 				return HttpResponse('Invalid: Your Loan Request Exceeds 10 Niara million Limit')
 			else:
 				return HttpResponse('Opps! You are not Eligible for this loan.\nLoan will not be approved')
-
-			# if answer.lower() == 'approved':
-			# 	return HttpResponse("Congrats! You are Eligible for this loan.\nLoan will be approved")
-			# elif int(df['LoanAmount'])<10000000:
-			# 	return HttpResponse('Invalid: Your Loan Request Exceeds 10 Niara million Limit')
-			# else:
-			# 	return HttpResponse('Opps! You are not Eligible for this loan.\nLoan will not be approved')
-
 
 def full_blog_details(request, id=None):
 	if id is not None:
@@ -95,7 +87,6 @@ def full_blog_details(request, id=None):
 		context = {'blog':blog, 'blogs':blogs, "services":services}
 		return render(request, 'main/full_blog_detail.html', context)
 	# return Http404
-
 
 def service(request, service=None):
 	
@@ -121,25 +112,19 @@ def chart(request):
 		if form.is_valid():
 			labels = form.cleaned_data.get('labels')
 			data = form.cleaned_data.get('data')
-			graph_type = form.cleaned_data.get('graph_type')
+			indicate = form.cleaned_data.get('indicator')
 			file = form.cleaned_data.get('file')
 
+			file = File.objects.create(file=file)
 
-			file_data = io.StringIO(file.read().decode('utf-8'))
-			reader = csv.DictReader(file_data)
-
-			if not labels or not data in next(reader).keys():
+			plot = clean_file(file, labels, data, indicate)
+			
+			if plot is None:
 				messages.error(request, "Column name must match the one on the File")
-			else:
-				data_,labels_ = [],[]
-				for x in reader:
-					data_.append(x[data])
-					labels_.append(x[labels])
-				labels_ = list(set(labels_))
 
-				form = GraphForm()
-
-				context = {'form':form, 'data':data_,'labels':labels_,'check':True, 'graph_type':graph_type}
-				return render(request, 'main/monitoring.html', context)
+			form = GraphForm()
+			file.delete()
+			context = {'form':form, "chart": plot, 'check':True}
+			return render(request, 'main/monitoring.html', context)
 	return render(request, 'main/monitoring.html', {'form':form})
 	
