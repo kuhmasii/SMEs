@@ -8,8 +8,6 @@
             <div>
                 <div>
                     <div class="section-title position-relative pb-3 mb-5">
-                        <h5 class="fw-bold text-primary text-uppercase">Plot A Graph</h5>
-                        <h1 class="mb-0"></h1>
                     </div>
                     <div>
                       {% if check %}
@@ -21,7 +19,7 @@
 
                       {% else %}
                         <div>
-                          <h1 class="fw-bold text-uppercase">Graph Plot Appears Here.</h1>
+                          <h1 class="fw-bold text-uppercase">Graph Report Appears Here.</h1>
                         </div>
                       {% endif %}
                     </div>
@@ -38,8 +36,7 @@
                                 {% endfor %}
                                 {% csrf_token %}
                                 <div class="col-12">
-                                    <button class="btn btn-dark w-100 py-3" type="submit">Plot A
-                                    Graph</button>
+                                    <button class="btn btn-dark w-100 py-3" type="submit">Check Your Report</button>
                                 </div>
                             </div>
                         </form>
