@@ -106,7 +106,6 @@ class LoanPred(models.Model):
 	def __str__(self):
 		return '{}, {}'.format(self.lastname, self.firstname)
 
-
 class File(models.Model):
 	file = models.FileField(upload_to='file')
 	created = models.DateTimeField(auto_now_add=True)

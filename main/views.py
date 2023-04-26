@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from . models import Loan, Service, Blog, File
@@ -77,6 +78,7 @@ def loan_predict(request):
 				return HttpResponse('Opps! You are not Eligible for this loan.\nLoan will not be approved')
 
 def full_blog_details(request, id=None):
+	
 	if id is not None:
 		try:
 			blog = Blog.objects.select_related('loan', 'service').get(id=id)
@@ -86,14 +88,18 @@ def full_blog_details(request, id=None):
 			raise Http404
 		context = {'blog':blog, 'blogs':blogs, "services":services}
 		return render(request, 'main/full_blog_detail.html', context)
-	# return Http404
+	return HttpResponse("Page Not Found")
 
 def service(request, service=None):
 	
 	if service is not None:
 		service = Service.objects.get(name__iexact=service)
 		filters = Blog.objects.filter(service=service)
-		context = {'service':service, 'filters':filters}
+
+		paginator = Paginator(filters, 5)
+		page_number = request.GET.get("page")
+		page_obj = paginator.get_page(page_number)
+		context = {'service':service, 'page_obj':page_obj}
 		
 		return render(request, 'main/blog.html', context)
 	else: 
@@ -102,7 +108,6 @@ def service(request, service=None):
 	context = {'service':service}
 	return render(request, 'main/services.html', context)
 	
-
 def chart(request):
 
 	form = GraphForm()
