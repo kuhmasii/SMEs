@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 from django.http import Http404
 from . models import Loan, Service, Blog, File
 from . forms import LoanPredForm, GraphForm
@@ -107,11 +108,12 @@ def service(request, service=None):
 
 	context = {'service':service}
 	return render(request, 'main/services.html', context)
-	
+
+@csrf_exempt
 def chart(request):
 
 	form = GraphForm()
-	
+		
 	if request.method == 'POST':
 		form = GraphForm(request.POST, request.FILES)
 		if form.is_valid():
