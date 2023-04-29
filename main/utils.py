@@ -1,39 +1,43 @@
-# from keras import backend as K
-# import joblib
-# import numpy as np
+from sklearn import preprocessing
 import plotly.express as px
+from sklearn import metrics
+from pathlib import Path
 import pandas as pd
 import numpy as np
-# from pathlib import Path
+import joblib
+
+import warnings
+warnings.filterwarnings('ignore')
+
+def clean_data(test_data):
+	
+	# changing all categorical data to binary.
+	test_data["Gender"] = [1 if x == "Male" else 0 for x in test_data["Gender"]]
+	test_data["Education"] = [1 if x == "Graduate" else 0 for x in test_data["Education"]]
+	test_data["Self_Employed"] = [1 if x == "Yes" else 0 for x in test_data["Self_Employed"]]
+	test_data["Married"] = [1 if x == "Yes" else 0 for x in test_data["Married"]]
+	test_data["Property_Area"] = [1 if x == "Urban" else 0 for x in test_data["Property_Area"]]
+	test_data['Credit_History'] = [1 if x == 1. else 0 for x in test_data['Credit_History']]  
+	return test_data
 
 
-# def ohevalue(df):
-# 	ohe_col=joblib.load(Path("main") / "model/model1.pkl")
-# 	cat_columns=['Gender','Married','Education','Self_Employed','Property_Area']
-# 	df_processed = pd.get_dummies(df, columns=cat_columns)
-# 	newdict={}
-# 	for i in ohe_col:
-# 		if i in df_processed.columns:
-# 			newdict[i]=df_processed[i].values
-# 		else:
-# 			newdict[i]=0
-# 	newdf=pd.DataFrame(newdict)
-# 	return newdf
-
-# def approvereject(unit):
-# 	try:
-# 		mdl=joblib.load(Path("main") / "model/loan_model.pkl")
-# 		scaler=joblib.load(Path("main") / "model/ML_Model.pkl")
-# 		X=scaler.transform(unit)
-# 		y_pred=mdl.predict(X)
-# 		y_pred=(y_pred>0.58)
-		
-# 		newdf=pd.DataFrame(y_pred, columns=['Status'])
-# 		newdf=newdf.replace({True:'Approved', False:'Rejected'})
-# 		K.clear_session()
-# 		return (newdf.values[0][0],X[0])
-# 	except ValueError as e:
-# 		return (e.args[0])
+def check_loan_status(x_test):
+	
+	try:
+		# 'Y' == 1 means Loan status approved
+		# 'N' == 0 means Loan status rejected
+		# using random forest classifier model
+		rfc = joblib.load(Path("main") / "ML_models/rfc.pkl")
+		# using logistic regression model
+		lc = joblib.load(Path("main") / "ML_models/lc.pkl")
+		random_forest_prediction = rfc.predict(x_test)
+		logistic_prediction = lc.predict(x_test)
+		print(random_forest_prediction, logistic_prediction)
+		if random_forest_prediction == [1]:
+			return {"status":"Approved"}
+		return {"status":"Failed"}
+	except:
+		return None
 
 def clean_file(file, labels_, data_, indicate_=None):
 

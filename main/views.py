@@ -1,13 +1,12 @@
-from django.core.paginator import Paginator
+from .utils import clean_file, clean_data, check_loan_status
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-from django.http import Http404
 from . models import Loan, Service, Blog, File
+from django.core.paginator import Paginator
 from . forms import LoanPredForm, GraphForm
 from django.http import HttpResponse
-from .utils import clean_file
 from django.contrib import messages
-
+import pandas as pd
 
 def index(request):
 	services = Service.objects.all()
@@ -48,35 +47,43 @@ def loan_detail(request, loan_id=None):
 	return render(request, 'main/detail.html', context)
 
 def loan_predict(request):
+	
 	if request.method == "POST":
 		form = LoanPredForm(request.POST)
 		if form.is_valid():
-			Firstname = form.cleaned_data.get('firstname')
-			Lastname = form.cleaned_data.get('lastname')
-			Dependents = form.cleaned_data.get('Dependents')
-			ApplicantIncome = form.cleaned_data.get('ApplicantIncome')
-			CoapplicantIncome = form.cleaned_data.get('CoapplicantIncome')
-			LoanAmount = form.cleaned_data.get('LoanAmount')
-			Loan_Amount_Term  = form.cleaned_data.get('Loan_Amount_Term')
-			Credit_History = form.cleaned_data.get('Credit_History')
-			Gender  = form.cleaned_data.get('Gender')
-			Married  = form.cleaned_data.get('Married')
-			Education = form.cleaned_data.get('Education')
-			Self_Employed  = form.cleaned_data.get('Self_Employed')
-			Property_Area = form.cleaned_data.get('Property_Area')
+			form.save()
 
-			# myDict = request.POST.dict()
-			# myDict.pop('csrfmiddlewaretoken')
+			# data coming from the user requesting for loan
+			_ = request.POST.dict()
+			user_data = dict(
+						Gender=_['gender'], 
+						Married=_['married'], 
+						Dependents=float(_['dependants']), 
+						Education=_['graduate'], 
+						Self_Employed=_['self_employed'], 
+						ApplicantIncome=float(_['applicant_income']), 
+						CoapplicantIncome=float(_['co_applicant_income']), 
+						LoanAmount=float(_['loan_amt']), 
+						Loan_Amount_Term=float(_['loan_term']),
+						Credit_History=_['credit_history'], 
+						Property_Area=_['area']
+			)
+
+			# creating a dataframe for data to be used in pandas for 
+			# data cleaning and encoding
+			before_data = pd.DataFrame(user_data, index=[0])
 			
-			# df=pd.DataFrame(myDict, index=[0])
-			# answer=approvereject(ohevalue(df))[0]
-			# Xscalers=approvereject(ohevalue(df))[1]
-			if ApplicantIncome > LoanAmount:
-				return HttpResponse("Congrats! You are Eligible for this loan.\nLoan will be approved")
-			elif int(LoanAmount)<10000000:
-				return HttpResponse('Invalid: Your Loan Request Exceeds 10 Niara million Limit')
-			else:
-				return HttpResponse('Opps! You are not Eligible for this loan.\nLoan will not be approved')
+			# calling the clean_data function to clean the data transformed 
+			# into dataframe and also check for loan eligibility
+			loan_status = check_loan_status(clean_data(before_data))
+
+			if loan_status:
+				if loan_status['status'] == "Approved":
+					return HttpResponse("Congrats! You are Eligible for this loan.\nLoan will be approved")
+				else:
+					return HttpResponse('Opps! You are not Eligible for this loan.\nLoan will not be approved')
+			return HttpResponse("Something went wrong")
+		return HttpResponse(f'{form.errors}')
 
 def full_blog_details(request, id=None):
 	
@@ -86,7 +93,7 @@ def full_blog_details(request, id=None):
 			blogs = Blog.objects.select_related('loan', 'service').all()[:6]
 			services = Service.objects.all()
 		except blog.DoesNotExist:
-			raise Http404
+			raise HttpResponse("Page Does Not Exist")
 		context = {'blog':blog, 'blogs':blogs, "services":services}
 		return render(request, 'main/full_blog_detail.html', context)
 	return HttpResponse("Page Not Found")

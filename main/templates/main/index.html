@@ -72,7 +72,7 @@
                     </div>
                     <div class="ps-4">
                         <h5 class="text-white mb-0">Happy Clients</h5>
-                        <h1 class="text-white mb-0" data-toggle="counter-up">100</h1>
+                        <h1 class="text-white mb-0" data-toggle="counter-up">50</h1>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                     </div>
                     <div class="ps-4">
                         <h5 class="text-primary mb-0">Loan Served</h5>
-                        <h1 class="mb-0" data-toggle="counter-up">100</h1>
+                        <h1 class="mb-0" data-toggle="counter-up">50</h1>
                     </div>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="ps-4">
                         <h5 class="text-white mb-0">People Trained</h5>
-                        <h1 class="text-white mb-0" data-toggle="counter-up">100</h1>
+                        <h1 class="text-white mb-0" data-toggle="counter-up">50</h1>
                     </div>
                 </div>
             </div>
@@ -207,9 +207,15 @@
                     </div>
                     <h4 class="mb-3">{{ service.name }}</h4>
                     <p class="m-0">{{ service.description|truncatewords:20 }}</p>
-                    <a class="btn btn-lg btn-primary rounded" href="{% url 'main:service' service.name %}">
-                        <i class="bi bi-arrow-right"></i>
-                    </a>
+                {% if service.url %}
+                <a class="btn btn-lg btn-primary rounded" href="{{ service.url }}">
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+                {% else %}
+                <a class="btn btn-lg btn-primary rounded" href="{% url 'main:service' service.name  %}">
+                <i class="bi bi-arrow-right"></i>
+                </a>
+                {% endif %}
                 </div>
             </div>
             {% endfor %}
