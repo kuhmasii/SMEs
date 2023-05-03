@@ -32,7 +32,7 @@ def check_loan_status(x_test):
 		lc = joblib.load(Path("main") / "ML_models/lc.pkl")
 		random_forest_prediction = rfc.predict(x_test)
 		logistic_prediction = lc.predict(x_test)
-		print(random_forest_prediction, logistic_prediction)
+		
 		if random_forest_prediction == [1]:
 			return {"status":"Approved"}
 		return {"status":"Failed"}
