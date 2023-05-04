@@ -1,1 +1,2 @@
-web: python manage.py migrate && gunicorn smes.wsgi
+web: gunicorn smes.wsgi
+release: python manage.py migrate
